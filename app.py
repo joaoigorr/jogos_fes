@@ -65,7 +65,7 @@ if games:
     df["Placar"] = df["Placar"].apply(lambda x: x if len(x.strip()) <= 6 else " - ")
     df_next = df[df["Data"] >= today.strftime("%Y-%m-%d")]
     df_next = df_next.sort_values(by="Data")
-    df_next = df_next[["Rodada", "Data", "Hora","Dia da Semana", "Mandante", "Placar", "Visitante", "Estádio", "Link"]]
+    df_next = df_next[["Rodada", "Data", "Hora", "Mandante", "Placar", "Visitante", "Estádio", "Link"]]
     st.write("Próximos Jogos:")
     st.data_editor(
         df_next,
@@ -77,7 +77,7 @@ if games:
     st.write("Últimos Jogos:")
     df_last = df[df["Data"] < today.strftime("%Y-%m-%d")]
     df_last = df_last.sort_values(by="Data", ascending=False)
-    df_last = df_last[["Rodada", "Data", "Hora","Dia da Semana", "Mandante", "Placar", "Visitante", "Estádio", "Link"]]
+    df_last = df_last[["Rodada", "Data", "Hora", "Mandante", "Placar", "Visitante", "Estádio", "Link"]]
     st.data_editor(
         df_last,
         column_config={
