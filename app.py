@@ -61,7 +61,7 @@ if games:
     df.columns = ["Data", "Mandante", "Placar", "Visitante", "Estádio", "Rodada","Link"]
     df["Hora"] = df["Data"].str[11:16]
     df["Data"] = df["Data"].str[:10]
-    df["Dia da Semana"] = pd.to_datetime(df["Data"]).dt.day_name(locale='pt_BR')
+    #df["Dia da Semana"] = pd.to_datetime(df["Data"]).dt.day_name(locale='pt_BR')
     df["Placar"] = df["Placar"].apply(lambda x: x if len(x.strip()) <= 6 else " - ")
     df_next = df[df["Data"] >= today.strftime("%Y-%m-%d")]
     df_next = df_next.sort_values(by="Data")
