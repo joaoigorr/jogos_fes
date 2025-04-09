@@ -9,29 +9,8 @@ st.title("Campeonato Estadual Sub-20")
 
 today = datetime.today()
 
-links_serieD = [
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-nova-iguacu/830096",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-boavista-saf/830131",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-porto-vitoria-f-c/830345",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-agua-santa/830389",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-portuguesa/830420",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-nova-iguacu/830453",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-boavista-saf/830483",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-pouso-alegre/830517",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-marica/830550",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-agua-santa/830583",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-portuguesa/830620",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-rio-branco-a-c-saf/830653",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/porto-vitoria-f-c-x-pouso-alegre/830683",
-    "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-marica/830717"
-]
-
-
-
-
-
 def get_games():
-    url = "https://futebolcapixaba.com/campeonatos/capixabao-2025/"
+    url = "https://futebolcapixaba.com/campeonatos/estadual-sub-20-2025/"
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
