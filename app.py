@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import time
 from getData import *
 
 st.set_page_config(page_title="Campeonatos Temporada 2025", layout="wide")
@@ -24,31 +25,11 @@ links_serieD = [
     "https://cbf.com.br/futebol-brasileiro/jogos/campeonato-brasileiro/serie-d/2025/rio-branco-a-c-saf-x-marica/830717"
 ]
 
-serie_d = []
-for link in links_serieD:
-    data = match_data(link)
-    teams = get_teams(link)
-    if len(teams) == 2:
-        mandante = teams[0]
-        visitante = teams[1]
-        hora = data[0]
-        dia = data[1]
-        estadio = data[2]
-        serie_d.append([dia, hora, mandante, visitante, estadio, link])
-df_serie_d = pd.DataFrame(serie_d, columns=["Data","Hora","Mandante", "Visitante", "Estádio", "Link"])
-st.write("Campeonato Brasileiro Série D")
-st.data_editor(
-    df_serie_d,
-    column_config={
-        "Link": st.column_config.LinkColumn("Link")
-    },
-    hide_index=True
-)
 
-st.write("Campeonato Estadual Sub-20")
-games = get_games()
-links = get_game_links()
-if games:
+with st.spinner("Carregando Copa ES..."):
+    games = get_games()
+    links = get_game_links()
+    st.write("COPA ES - 2025")
     df_games = pd.DataFrame(games)
     df_links = pd.DataFrame(links)
     df = pd.concat([df_games, df_links], axis=1)
@@ -67,16 +48,27 @@ if games:
         "Link": st.column_config.LinkColumn("Link")
     },
     hide_index=True
-)
-    #st.write("Últimos Jogos:")
-    #df_last = df[df["Data"] < today.strftime("%Y-%m-%d")]
-    #df_last = df_last.sort_values(by="Data", ascending=False)
-    #df_last = df_last[["Rodada", "Data", "Mandante", "Placar", "Visitante", "Estádio", "Link"]]
-    #st.data_editor(
-    #    df_last,
-    #    column_config={
-    #    "Link": st.column_config.LinkColumn("Link")
-    #},
-    #hide_index=True)
-else:
-    st.write("Nenhum jogo encontrado.")
+    )
+
+serie_d = []
+
+with st.spinner("Carregando Serie D..."):
+    for link in links_serieD:
+        data = match_data(link)
+        teams = get_teams(link)
+        mandante = teams[0]
+        visitante = teams[1]
+        hora = data[0]
+        dia = data[1]
+        estadio = data[2]
+        serie_d.append([dia, hora, mandante, visitante, estadio, link])
+
+    df_serie_d = pd.DataFrame(serie_d, columns=["Data","Hora","Mandante", "Visitante", "Estádio", "Link"])
+    st.write("Campeonato Brasileiro Série D")
+    st.data_editor(
+        df_serie_d,
+        column_config={
+            "Link": st.column_config.LinkColumn("Link")
+        },
+        hide_index=True
+    )
