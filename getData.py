@@ -45,7 +45,7 @@ def get_games():
         return []
 
 def get_game_links():
-    url = "https://futebolcapixaba.com/campeonatos/estadual-sub-20-2025/"
+    url = "https://futebolcapixaba.com/campeonatos/copa-es-2025/"
     response = requests.get(url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, "html.parser")
