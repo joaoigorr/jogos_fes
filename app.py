@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-import time
 from getData import *
+import time
 
 st.set_page_config(page_title="Campeonatos Temporada 2025", layout="wide")
 st.title("Próximos Jogos Para Scouts - ES")
@@ -54,14 +54,18 @@ serie_d = []
 
 with st.spinner("Carregando Serie D..."):
     for link in links_serieD:
-        data = match_data(link)
-        teams = get_teams(link)
-        mandante = teams[0]
-        visitante = teams[1]
-        hora = data[0]
-        dia = data[1]
-        estadio = data[2]
-        serie_d.append([dia, hora, mandante, visitante, estadio, link])
+        try:
+            data = match_data(link)
+            teams = get_teams(link)
+            mandante = teams[0]
+            visitante = teams[1]
+            hora = data[0]
+            dia = data[1]
+            estadio = data[2]
+            serie_d.append([dia, hora, mandante, visitante, estadio, link])
+            time.sleep(0.3)
+        except Exception as e:
+            print(f"Error processing link {link}: {e}")
 
     df_serie_d = pd.DataFrame(serie_d, columns=["Data","Hora","Mandante", "Visitante", "Estádio", "Link"])
     st.write("Campeonato Brasileiro Série D")
