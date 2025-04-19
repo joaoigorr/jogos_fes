@@ -42,12 +42,20 @@ with st.spinner("Carregando Copa ES..."):
     df_next = df[df["Data"] >= today.strftime("%Y-%m-%d")]
     df_next = df_next.sort_values(by="Data")
     df_next = df_next[["Rodada", "Data", "Hora", "Dia da Semana", "Mandante", "Visitante", "Estádio", "Link"]]
+    df_next["estadio"] = df_next["Estádio"].apply(
+        lambda estadio: f"Estádio {estadio}" if not estadio.startswith("Estádio") else estadio
+    )
+    df_next["maps"] = df_next["estadio"].apply(
+        lambda estadio: f"https://www.google.com/maps/search/{estadio.replace(' ', '+')}"
+    )
+    df_next.drop(columns=["estadio"], inplace=True)
     st.data_editor(
         df_next,
         column_config={
-        "Link": st.column_config.LinkColumn("Link")
-    },
-    hide_index=True
+            "maps": st.column_config.LinkColumn("Localização",display_text="Google Maps"),
+            "Link": st.column_config.LinkColumn("Link",display_text="Site FES"),
+        },
+        hide_index=True
     )
 
 serie_d = []
@@ -69,10 +77,18 @@ with st.spinner("Carregando Serie D..."):
 
     df_serie_d = pd.DataFrame(serie_d, columns=["Data","Hora","Mandante", "Visitante", "Estádio", "Link"])
     st.write("Campeonato Brasileiro Série D")
+    df_serie_d["estadio"] = df_serie_d["Estádio"].apply(
+        lambda estadio: f"Estádio {estadio}" if not estadio.startswith("Estádio") else estadio
+    )
+    df_serie_d["maps"] = df_serie_d["estadio"].apply(
+        lambda estadio: f"https://www.google.com/maps/search/{estadio.replace(' ', '+')}"
+    )
+    df_serie_d.drop(columns=["estadio"], inplace=True)
     st.data_editor(
         df_serie_d,
         column_config={
-            "Link": st.column_config.LinkColumn("Link")
+            "Link": st.column_config.LinkColumn("Link", display_text="Site CBF"),
+            "maps": st.column_config.LinkColumn("Localização", display_text="Google Maps")
         },
         hide_index=True
     )
