@@ -1,4 +1,3 @@
-import webbrowser
 from urllib.parse import urlencode
 
 def create_event(title, date, time, duration_minutes, description="", location=""):
