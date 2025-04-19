@@ -5,7 +5,11 @@ from getData import *
 import time
 from add_calendar import create_event
 
-st.set_page_config(page_title="Campeonatos Temporada 2025", layout="wide")
+st.set_page_config(
+    page_title="Campeonatos Temporada 2025",
+    layout="wide",
+    page_icon="images/icon.png"
+)
 st.title("Próximos Jogos Para Scouts - ES")
 today = datetime.today()
 
