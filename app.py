@@ -3,6 +3,7 @@ import pandas as pd
 from datetime import datetime
 from getData import *
 import time
+from add_calendar import create_event
 
 st.set_page_config(page_title="Campeonatos Temporada 2025", layout="wide")
 st.title("Próximos Jogos Para Scouts - ES")
@@ -48,14 +49,29 @@ with st.spinner("Carregando Copa ES..."):
     df_next["maps"] = df_next["estadio"].apply(
         lambda estadio: f"https://www.google.com/maps/search/{estadio.replace(' ', '+')}"
     )
+    df_next["calendar"] = df_next.apply(
+        lambda row: create_event(
+            title=f"{row['Mandante']} x {row['Visitante']}",
+            date=row["Data"].replace("-", ""),
+            time=row["Hora"],
+            duration_minutes=120,
+            description="Copa ES 2025",
+            location=row["estadio"]
+        ),
+        axis=1
+    )
+
     df_next.drop(columns=["estadio"], inplace=True)
     st.data_editor(
         df_next,
         column_config={
             "maps": st.column_config.LinkColumn("Localização",display_text="Google Maps"),
             "Link": st.column_config.LinkColumn("Link",display_text="Site FES"),
+            "calendar": st.column_config.LinkColumn("Calendário", display_text="Adicionar ao Calendar")
         },
-        hide_index=True
+        hide_index=True,
+        #use_container_width=False,
+        column_order=["Data", "Hora", "Dia" , "calendar","Mandante", "Visitante", "Estádio","maps", "Link"]
     )
 
 serie_d = []
